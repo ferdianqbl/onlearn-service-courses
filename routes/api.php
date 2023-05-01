@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/mentors', [MentorController::class, 'create']);
+Route::controller(MentorController::class)->group(function () {
+    Route::post('/mentors', 'create');
+});
