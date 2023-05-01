@@ -13,7 +13,19 @@ class MentorController extends Controller
      */
     public function index()
     {
-        //
+        $mentors = Mentor::all();
+
+        if (count($mentors) <= 0)
+            return response()->json([
+                'status' => '1',
+                'message' => 'No Mentors yet'
+            ], 404);
+
+        return response()->json([
+            'status' => '0',
+            'message' => "All mentors found",
+            'data' => $mentors
+        ], 200);
     }
 
     /**
@@ -25,7 +37,7 @@ class MentorController extends Controller
             'name' => 'required|string',
             'profile' => 'required|url',
             'profession' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:mentors',
         ];
 
         $data = $request->all();
@@ -92,11 +104,19 @@ class MentorController extends Controller
             ], 400);
 
         $mentor = Mentor::find($id);
+        $mentorWithSameEmail = Mentor::where('email', $data['email'])->first();
+
         if (!$mentor)
             return response()->json([
                 'status' => '1',
                 'message' => 'Mentor not found'
             ], 404);
+
+        if ($mentorWithSameEmail && $mentorWithSameEmail->id !== $mentor->id)
+            return response()->json([
+                'status' => '1',
+                'message' => 'The email has already been taken.'
+            ], 400);
 
         $mentor->update($data);
         return response()->json([

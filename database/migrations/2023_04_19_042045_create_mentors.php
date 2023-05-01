@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('profile');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('profession');
             $table->timestamps();
         });
