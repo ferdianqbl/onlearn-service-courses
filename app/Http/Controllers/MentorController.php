@@ -59,27 +59,23 @@ class MentorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(Mentor $mentor)
+    public function show($id)
     {
-        //
-    }
+        $mentor = Mentor::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mentor $mentor)
-    {
-        //
+        if (!$mentor)
+            return response()->json([
+                'status' => '1',
+                'message' => 'Mentor not found'
+            ], 404);
+
+        return response()->json([
+            'status' => '0',
+            'message' => "Mentor found",
+            'data' => $mentor
+        ], 200);
     }
 
     /**
@@ -129,8 +125,21 @@ class MentorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mentor $mentor)
+    public function destroy($id)
     {
-        //
+        $mentor = Mentor::find($id);
+
+        if (!$mentor)
+            return response()->json([
+                'status' => '1',
+                'message' => 'Mentor not found'
+            ], 404);
+
+        $mentor->delete();
+
+        return response()->json([
+            'status' => '0',
+            'message' => "Mentor successfully deleted",
+        ], 200);
     }
 }

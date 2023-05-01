@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(MentorController::class)->group(function () {
     Route::get('/mentors', 'index');
+    Route::get('/mentors/{id}', 'show');
     Route::post('/mentors', 'create');
     Route::post('/mentors/{id}', 'update');
+    Route::delete('/mentors/{id}', 'destroy');
 });
