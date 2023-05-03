@@ -76,9 +76,21 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $course = Course::find($id);
+
+        if (!$course)
+            return response()->json([
+                'status' => 1,
+                'message' => 'Course not found'
+            ], 404);
+
+        return response()->json([
+            'status' => 0,
+            'message' => "Course found",
+            'data' => $course
+        ], 200);
     }
 
     /**
