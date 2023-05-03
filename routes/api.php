@@ -29,5 +29,5 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses/{id}', 'show');
     Route::post('/courses', 'create');
     Route::post('/courses/{id}', 'update');
-    // Route::delete('/mentors/{id}', 'destroy');
+    Route::delete('/courses/{id}', 'destroy');
 });
