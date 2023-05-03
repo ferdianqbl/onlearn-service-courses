@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MentorController;
 use Illuminate\Http\Request;
@@ -30,4 +31,12 @@ Route::controller(CourseController::class)->group(function () {
     Route::post('/courses', 'create');
     Route::post('/courses/{id}', 'update');
     Route::delete('/courses/{id}', 'destroy');
+});
+
+Route::controller(ChapterController::class)->group(function () {
+    // Route::get('/courses', 'index');
+    // Route::get('/courses/{id}', 'show');
+    Route::post('/chapters', 'create');
+    // Route::post('/courses/{id}', 'update');
+    // Route::delete('/courses/{id}', 'destroy');
 });
