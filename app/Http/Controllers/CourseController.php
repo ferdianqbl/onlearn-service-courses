@@ -39,7 +39,7 @@ class CourseController extends Controller
 
         if ($validator->fails())
             return response()->json([
-                'status' => '1',
+                'status' => 1,
                 'message' => $validator->errors()
             ], 400);
 
@@ -47,7 +47,7 @@ class CourseController extends Controller
 
         if (!$mentor)
             return response()->json([
-                'status' => '1',
+                'status' => 1,
                 'message' => "Mentor not found"
             ], 404);
 
@@ -55,7 +55,7 @@ class CourseController extends Controller
         $course = Course::create($data);
 
         return response()->json([
-            'status' => '0',
+            'status' => 0,
             'message' => 'Course successfully created',
             'data' => $course
         ], 200);
@@ -72,9 +72,54 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name' => 'string',
+            'certificate' => 'boolean',
+            'thumbnail' => 'string|url',
+            'type' => 'in:free, premium',
+            'status' => 'in:draft,published',
+            'price' => 'integer',
+            'level' => 'in:all,beginner,intermediate,advanced',
+            'description' => 'string',
+            'mentor_id' => 'integer'
+        ];
+
+        $data = $request->all();
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails())
+            return response()->json([
+                'status' => 1,
+                'message' => $validator->errors()
+            ], 400);
+
+        if ($request->input('mentor_id')) {
+            $mentor = Mentor::find($data['mentor_id']);
+
+            if (!$mentor)
+                return response()->json([
+                    'status' => 1,
+                    'message' => "Mentor not found"
+                ], 404);
+        }
+
+        $course = Course::find($id);
+
+        if (!$course)
+            return response()->json([
+                'status' => 1,
+                'message' => "Course not found"
+            ], 404);
+
+        $course->update($data);
+
+        return response()->json([
+            'status' => 0,
+            'message' => "Course successfully updated",
+            'data' => $course
+        ], 200);
     }
 
     /**

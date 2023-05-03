@@ -28,6 +28,6 @@ Route::controller(CourseController::class)->group(function () {
     // Route::get('/mentors', 'index');
     // Route::get('/mentors/{id}', 'show');
     Route::post('/courses', 'create');
-    // Route::post('/mentors/{id}', 'update');
+    Route::post('/courses/{id}', 'update');
     // Route::delete('/mentors/{id}', 'destroy');
 });
