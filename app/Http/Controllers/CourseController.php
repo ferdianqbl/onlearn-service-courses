@@ -14,7 +14,19 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::all();
+
+        if (count($courses) <= 0)
+            return response()->json([
+                'status' => 1,
+                'message' => 'No Courses yet'
+            ], 404);
+
+        return response()->json([
+            'status' => 0,
+            'message' => "All Courses found",
+            'data' => $courses
+        ], 200);
     }
 
     /**

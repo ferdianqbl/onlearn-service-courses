@@ -25,7 +25,7 @@ Route::controller(MentorController::class)->group(function () {
 });
 
 Route::controller(CourseController::class)->group(function () {
-    // Route::get('/mentors', 'index');
+    Route::get('/courses', 'index');
     // Route::get('/mentors/{id}', 'show');
     Route::post('/courses', 'create');
     Route::post('/courses/{id}', 'update');
