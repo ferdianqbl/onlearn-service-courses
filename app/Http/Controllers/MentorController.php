@@ -52,7 +52,7 @@ class MentorController extends Controller
         $mentor = Mentor::create($data);
 
         return response()->json([
-            'status' => '1',
+            'status' => '0',
             'message' => 'Mentor successfully created',
             'data' => $mentor
         ], 200);
