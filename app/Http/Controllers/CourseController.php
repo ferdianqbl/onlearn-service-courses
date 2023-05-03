@@ -12,15 +12,30 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $courses = Course::query();
 
-        // if ($courses->count() <= 0)
-        //     return response()->json([
-        //         'status' => 1,
-        //         'message' => 'No Courses yet'
-        //     ], 404);
+        $name = $request->query('name');
+        $status = $request->query('status');
+        $type = $request->query('type');
+        $level = $request->query('level');
+
+        $courses->when($name, function ($query) use ($name) {
+            return $query->whereRaw("name LIKE '%" . $name . "%'");
+        });
+
+        $courses->when($status, function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        });
+
+        $courses->when($type, function ($query) use ($type) {
+            return $query->where('type', '=', $type);
+        });
+
+        $courses->when($level, function ($query) use ($level) {
+            return $query->where('level', '=', $level);
+        });
 
         return response()->json([
             'status' => 0,
@@ -38,7 +53,7 @@ class CourseController extends Controller
             'name' => 'required|string',
             'certificate' => 'required|boolean',
             'thumbnail' => 'string|url',
-            'type' => 'required|in:free, premium',
+            'type' => 'required|in:free,premium',
             'status' => 'required|in:draft,published',
             'price' => 'integer',
             'level' => 'required|in:all,beginner,intermediate,advanced',
