@@ -34,7 +34,7 @@ Route::controller(CourseController::class)->group(function () {
 });
 
 Route::controller(ChapterController::class)->group(function () {
-    Route::get('/courses', 'index');
+    Route::get('/chapters', 'index');
     // Route::get('/courses/{id}', 'show');
     Route::post('/chapters', 'create');
     Route::post('/chapters/{id}', 'update');
