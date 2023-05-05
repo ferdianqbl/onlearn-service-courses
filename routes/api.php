@@ -35,8 +35,8 @@ Route::controller(CourseController::class)->group(function () {
 
 Route::controller(ChapterController::class)->group(function () {
     Route::get('/chapters', 'index');
-    // Route::get('/courses/{id}', 'show');
+    Route::get('/chapters/{id}', 'show');
     Route::post('/chapters', 'create');
     Route::post('/chapters/{id}', 'update');
-    // Route::delete('/courses/{id}', 'destroy');
+    Route::delete('/chapters/{id}', 'destroy');
 });

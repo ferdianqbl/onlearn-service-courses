@@ -68,42 +68,10 @@ class ChapterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $rules = [
-            'name' => 'string',
-            'course_id' => 'integer',
-        ];
-
-        $data  = $request->all();
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 1,
-                'message' => $validator->errors(),
-            ], 400);
-        }
-
-        if ($request->input('course_id')) {
-            $course = Course::find($data['course_id']);
-            if (!$course) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Course not found',
-                ], 404);
-            }
-        }
-
         $chapter = Chapter::find($id);
+
         if (!$chapter) {
             return response()->json([
                 'status' => 1,
@@ -111,10 +79,9 @@ class ChapterController extends Controller
             ], 404);
         }
 
-        $chapter->update($data);
         return response()->json([
             'status' => 0,
-            'message' => 'Chapter successfully updated',
+            'message' => "Chapter found",
             'data' => $chapter,
         ], 200);
     }
@@ -122,8 +89,22 @@ class ChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $chapter = Chapter::find($id);
+
+        if (!$chapter) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'Chapter not found',
+            ], 404);
+        }
+
+        $chapter->delete();
+
+        return response()->json([
+            'status' => 0,
+            'message' => "Chapter successfully deleted",
+        ], 200);
     }
 }
