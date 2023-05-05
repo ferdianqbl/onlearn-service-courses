@@ -25,7 +25,7 @@ class ChapterController extends Controller
         return response()->json([
             'status' => 0,
             'message' => "All Chapters found",
-            'data' => $chapters->paginate(10)
+            'data' => $chapters->get()
         ], 200);
     }
 
