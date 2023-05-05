@@ -12,9 +12,21 @@ class ChapterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $chapters = Chapter::query();
+
+        $courseId = $request->query('course_id');
+
+        $chapters->when($courseId, function ($query) use ($courseId) {
+            return $query->where('course_id', '=', $courseId);
+        });
+
+        return response()->json([
+            'status' => 0,
+            'message' => "All Chapters found",
+            'data' => $chapters->paginate(10)
+        ], 200);
     }
 
     /**
@@ -64,9 +76,47 @@ class ChapterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'name' => 'string',
+            'course_id' => 'integer',
+        ];
+
+        $data  = $request->all();
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 1,
+                'message' => $validator->errors(),
+            ], 400);
+        }
+
+        if ($request->input('course_id')) {
+            $course = Course::find($data['course_id']);
+            if (!$course) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Course not found',
+                ], 404);
+            }
+        }
+
+        $chapter = Chapter::find($id);
+        if (!$chapter) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'Chapter not found',
+            ], 404);
+        }
+
+        $chapter->update($data);
+        return response()->json([
+            'status' => 0,
+            'message' => 'Chapter successfully updated',
+            'data' => $chapter,
+        ], 200);
     }
 
     /**
