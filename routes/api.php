@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MentorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,12 @@ Route::controller(ChapterController::class)->group(function () {
     Route::post('/chapters', 'create');
     Route::post('/chapters/{id}', 'update');
     Route::delete('/chapters/{id}', 'destroy');
+});
+
+Route::controller(LessonController::class)->group(function () {
+    // Route::get('/lessons', 'index');
+    // Route::get('/lessons/{id}', 'show');
+    Route::post('/lessons', 'create');
+    // Route::post('/lessons/{id}', 'update');
+    // Route::delete('/lessons/{id}', 'destroy');
 });
