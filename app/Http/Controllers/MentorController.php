@@ -13,7 +13,7 @@ class MentorController extends Controller
      */
     public function index()
     {
-        $mentors = Mentor::all();
+        $mentors = Mentor::with('courses')->get();
 
         if (count($mentors) <= 0)
             return response()->json([

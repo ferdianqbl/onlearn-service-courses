@@ -33,7 +33,7 @@ class Course extends Model
         return $this->belongsTo('App\Models\Mentor');
     }
 
-    public function chapter()
+    public function chapters()
     {
         return $this->hasMany('App\Models\Chapter')->orderBy('id', 'ASC');
     }
@@ -43,7 +43,7 @@ class Course extends Model
         return $this->hasMany('App\Models\ImageCourse')->orderBy('id', 'DESC');
     }
 
-    public function review()
+    public function reviews()
     {
         return $this->hasMany('App\Models\Review')->orderBy('id', 'ASC');
     }

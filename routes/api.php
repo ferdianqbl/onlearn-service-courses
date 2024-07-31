@@ -22,7 +22,7 @@ Route::controller(MentorController::class)->group(function () {
     Route::get('/mentors', 'index');
     Route::get('/mentors/{id}', 'show');
     Route::post('/mentors', 'create');
-    Route::post('/mentors/{id}', 'update');
+    Route::put('/mentors/{id}', 'update');
     Route::delete('/mentors/{id}', 'destroy');
 });
 
@@ -30,7 +30,7 @@ Route::controller(CourseController::class)->group(function () {
     Route::get('/courses', 'index');
     Route::get('/courses/{id}', 'show');
     Route::post('/courses', 'create');
-    Route::post('/courses/{id}', 'update');
+    Route::put('/courses/{id}', 'update');
     Route::delete('/courses/{id}', 'destroy');
 });
 
@@ -38,7 +38,7 @@ Route::controller(ChapterController::class)->group(function () {
     Route::get('/chapters', 'index');
     Route::get('/chapters/{id}', 'show');
     Route::post('/chapters', 'create');
-    Route::post('/chapters/{id}', 'update');
+    Route::put('/chapters/{id}', 'update');
     Route::delete('/chapters/{id}', 'destroy');
 });
 
@@ -46,6 +46,6 @@ Route::controller(LessonController::class)->group(function () {
     // Route::get('/lessons', 'index');
     // Route::get('/lessons/{id}', 'show');
     Route::post('/lessons', 'create');
-    // Route::post('/lessons/{id}', 'update');
+    Route::put('/lessons/{id}', 'update');
     // Route::delete('/lessons/{id}', 'destroy');
 });

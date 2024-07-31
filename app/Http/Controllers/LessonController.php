@@ -30,22 +30,22 @@ class LessonController extends Controller
 
         $data = $request->all();
         $validator = Validator::make($data, $rules);
-        if (!$validator->fails())
+        if ($validator->fails())
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors(),
             ], 400);
 
         $chapter = Chapter::find($data['chapter_id']);
         if (!$chapter)
             return response()->json([
-                'status' => 0,
+                'error' => 0,
                 'message' => "Chapter not found",
             ], 404);
 
         $lesson = Lesson::create($data);
         return response()->json([
-            'status' => 1,
+            'error' => 1,
             'message' => "Lesson created",
             'data' => $lesson
         ], 201);
@@ -64,7 +64,44 @@ class LessonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $rules = [
+            'name' => 'string',
+            'video' => 'string',
+            'chapter_id' => 'integer'
+        ];
+
+        $data = $request->all();
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails())
+            return response()->json([
+                'error' => 1,
+                'message' => $validator->errors(),
+            ], 400);
+
+        if ($request->input('chapter_id')) {
+            $chapter = Chapter::find($data['chapter_id']);
+
+            if (!$chapter)
+                return response()->json([
+                    'error' => 1,
+                    'message' => "Chapter not found"
+                ], 404);
+        }
+
+        $lesson = Lesson::find($id);
+        if (!$lesson)
+            return response()->json([
+                'error' => 0,
+                'message' => "Lesson not found",
+            ], 404);
+
+        $lesson->update($data);
+        
+        return response()->json([
+            'error' => 0,
+            'message' => "Lesson successfully updated",
+            'data' => $lesson
+        ], 200);
     }
 
     /**

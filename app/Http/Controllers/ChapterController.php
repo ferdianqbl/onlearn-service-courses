@@ -23,7 +23,7 @@ class ChapterController extends Controller
         });
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "All Chapters found",
             'data' => $chapters->get()
         ], 200);
@@ -44,7 +44,7 @@ class ChapterController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors(),
             ], 400);
         }
@@ -52,14 +52,14 @@ class ChapterController extends Controller
         $course = Course::find($data['course_id']);
         if (!$course) {
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Course not found',
             ], 404);
         }
 
         $chapter = Chapter::create($data);
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => 'Chapter successfully created',
             'data' => $chapter,
         ], 200);
@@ -74,13 +74,13 @@ class ChapterController extends Controller
 
         if (!$chapter) {
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Chapter not found',
             ], 404);
         }
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Chapter found",
             'data' => $chapter,
         ], 200);
@@ -95,7 +95,7 @@ class ChapterController extends Controller
 
         if (!$chapter) {
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Chapter not found',
             ], 404);
         }
@@ -103,7 +103,7 @@ class ChapterController extends Controller
         $chapter->delete();
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Chapter successfully deleted",
         ], 200);
     }

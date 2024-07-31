@@ -38,7 +38,7 @@ class CourseController extends Controller
         });
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "All Courses found",
             'data' => $courses->paginate(10)
         ], 200);
@@ -66,7 +66,7 @@ class CourseController extends Controller
 
         if ($validator->fails())
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors()
             ], 400);
 
@@ -74,7 +74,7 @@ class CourseController extends Controller
 
         if (!$mentor)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => "Mentor not found"
             ], 404);
 
@@ -82,7 +82,7 @@ class CourseController extends Controller
         $course = Course::create($data);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => 'Course successfully created',
             'data' => $course
         ], 200);
@@ -97,12 +97,12 @@ class CourseController extends Controller
 
         if (!$course)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Course not found'
             ], 404);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Course found",
             'data' => $course
         ], 200);
@@ -130,7 +130,7 @@ class CourseController extends Controller
 
         if ($validator->fails())
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors()
             ], 400);
 
@@ -139,7 +139,7 @@ class CourseController extends Controller
 
             if (!$mentor)
                 return response()->json([
-                    'status' => 1,
+                    'error' => 1,
                     'message' => "Mentor not found"
                 ], 404);
         }
@@ -148,14 +148,14 @@ class CourseController extends Controller
 
         if (!$course)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => "Course not found"
             ], 404);
 
         $course->update($data);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Course successfully updated",
             'data' => $course
         ], 200);
@@ -170,14 +170,14 @@ class CourseController extends Controller
 
         if (!$course)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Course not found'
             ], 404);
 
         $course->delete();
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Course successfully deleted",
         ], 200);
     }
