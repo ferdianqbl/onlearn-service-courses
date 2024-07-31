@@ -42,4 +42,9 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\ImageCourse')->orderBy('id', 'DESC');
     }
+
+    public function review()
+    {
+        return $this->hasMany('App\Models\Review')->orderBy('id', 'ASC');
+    }
 }

@@ -17,12 +17,12 @@ class MentorController extends Controller
 
         if (count($mentors) <= 0)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'No Mentors yet'
             ], 404);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "All mentors found",
             'data' => $mentors
         ], 200);
@@ -45,14 +45,14 @@ class MentorController extends Controller
 
         if ($validator->fails())
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors()
             ], 400);
 
         $mentor = Mentor::create($data);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => 'Mentor successfully created',
             'data' => $mentor
         ], 200);
@@ -67,12 +67,12 @@ class MentorController extends Controller
 
         if (!$mentor)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Mentor not found'
             ], 404);
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Mentor found",
             'data' => $mentor
         ], 200);
@@ -95,7 +95,7 @@ class MentorController extends Controller
 
         if ($validator->fails())
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => $validator->errors()
             ], 400);
 
@@ -105,19 +105,19 @@ class MentorController extends Controller
 
         if (!$mentor)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Mentor not found'
             ], 404);
 
         if ($mentorWithSameEmail && $mentorWithSameEmail->id !== $mentor->id)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'The email has already been taken'
             ], 400);
 
         $mentor->update($data);
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Mentor successfully updated",
             'data' => $mentor
         ], 200);
@@ -132,14 +132,14 @@ class MentorController extends Controller
 
         if (!$mentor)
             return response()->json([
-                'status' => 1,
+                'error' => 1,
                 'message' => 'Mentor not found'
             ], 404);
 
         $mentor->delete();
 
         return response()->json([
-            'status' => 0,
+            'error' => 0,
             'message' => "Mentor successfully deleted",
         ], 200);
     }
