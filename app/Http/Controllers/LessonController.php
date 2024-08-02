@@ -39,13 +39,13 @@ class LessonController extends Controller
         $chapter = Chapter::find($data['chapter_id']);
         if (!$chapter)
             return response()->json([
-                'error' => 0,
+                'error' => 1,
                 'message' => "Chapter not found",
             ], 404);
 
         $lesson = Lesson::create($data);
         return response()->json([
-            'error' => 1,
+            'error' => 0,
             'message' => "Lesson created",
             'data' => $lesson
         ], 201);
@@ -91,7 +91,7 @@ class LessonController extends Controller
         $lesson = Lesson::find($id);
         if (!$lesson)
             return response()->json([
-                'error' => 0,
+                'error' => 1,
                 'message' => "Lesson not found",
             ], 404);
 
