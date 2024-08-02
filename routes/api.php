@@ -36,5 +36,5 @@ Route::controller(LessonController::class)->group(function () {
     Route::get('/lessons/{id}', 'show');
     Route::post('/lessons', 'create');
     Route::put('/lessons/{id}', 'update');
-    // Route::delete('/lessons/{id}', 'destroy');
+    Route::delete('/lessons/{id}', 'destroy');
 });

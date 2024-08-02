@@ -74,7 +74,17 @@ class LessonController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        if(!$lesson) return response()->json([
+            'error' => 1,
+            'message' => "Lesson not found",
+        ], 404);
+
+        return response()->json([
+            'error' => 0,
+            'message' => "Lesson found",
+            'data' => $lesson
+        ], 200);
     }
 
     /**
@@ -127,6 +137,16 @@ class LessonController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        if(!$lesson) return response()->json([
+            'error' => 1,
+            'message' => "Lesson not found",
+        ], 404);
+
+        $lesson->delete();
+        return response()->json([
+            'error' => 0,
+            'message' => "Lesson successfully deleted",
+        ], 200);
     }
 }
