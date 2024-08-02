@@ -7,17 +7,6 @@ use App\Http\Controllers\MentorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
 Route::controller(MentorController::class)->group(function () {
     Route::get('/mentors', 'index');
     Route::get('/mentors/{id}', 'show');
@@ -43,8 +32,8 @@ Route::controller(ChapterController::class)->group(function () {
 });
 
 Route::controller(LessonController::class)->group(function () {
-    // Route::get('/lessons', 'index');
-    // Route::get('/lessons/{id}', 'show');
+    Route::get('/lessons', 'index');
+    Route::get('/lessons/{id}', 'show');
     Route::post('/lessons', 'create');
     Route::put('/lessons/{id}', 'update');
     // Route::delete('/lessons/{id}', 'destroy');

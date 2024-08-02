@@ -18,6 +18,13 @@ class ChapterController extends Controller
 
         $courseId = $request->query('course_id');
 
+        if(!$courseId){
+            return response()->json([
+                'error' => 1,
+                'message' => "Course ID is required",
+            ], 400);
+        }
+
         $chapters->when($courseId, function ($query) use ($courseId) {
             return $query->where('course_id', '=', $courseId);
         });

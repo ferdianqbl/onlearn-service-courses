@@ -12,9 +12,27 @@ class LessonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        //
+        $lessons = Lesson::query();
+        $chapterId = $req->query('chapter_id');
+
+        if(!$chapterId){
+            return response()->json([
+                'error' => 1,
+                'message' => "Chapter ID is required",
+            ], 400);
+        }
+
+        $lessons->when($chapterId, function ($query) use ($chapterId) {
+            return $query->where('chapter_id', '=', $chapterId);
+        });
+
+        return response()->json([
+            'error' => 0,
+            'message' => "All Lessons found",
+            'data' => $lessons->get()
+        ], 200);
     }
 
     /**
