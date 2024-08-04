@@ -4,6 +4,7 @@ use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MentorController;
+use App\Http\Controllers\ImageCourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +38,11 @@ Route::controller(LessonController::class)->group(function () {
     Route::post('/lessons', 'create');
     Route::put('/lessons/{id}', 'update');
     Route::delete('/lessons/{id}', 'destroy');
+});
+
+Route::controller(ImageCourseController::class)->group(function () {
+    Route::get('/image-courses', 'index');
+    Route::get('/image-courses/{id}', 'show');
+    Route::post('/image-courses', 'create');
+    Route::delete('/image-courses/{id}', 'destroy');
 });
