@@ -14,7 +14,12 @@ class ImageCourseController extends Controller
      */
     public function index()
     {
-        //
+        $imageCourses = ImageCourse::get();
+        return response()->json([
+            'error' => 0,
+            'message' => 'All image courses found',
+            'data' => $imageCourses
+        ], 200);
     }
 
     /**
@@ -52,27 +57,23 @@ class ImageCourseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-    }
+        $imageCourse = ImageCourse::find($id);
+        if(!$imageCourse) {
+            return response()->json([
+                'error' => 1,
+                'message' => 'Image course not found'
+            ], 404);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json([
+            'error' => 0,
+            'message' => 'Image course found',
+            'data' => $imageCourse
+        ], 200);
     }
 
     /**
