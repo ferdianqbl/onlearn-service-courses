@@ -22,6 +22,6 @@ class Lesson extends Model
 
     public function chapter()
     {
-        return $this->belongsTo('App\Models\Chapter');
+        return $this->belongsTo(Chapter::class);
     }
 }

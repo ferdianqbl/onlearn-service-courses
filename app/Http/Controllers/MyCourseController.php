@@ -12,9 +12,20 @@ class MyCourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $myCourses = MyCourse::query()->with('course');
+
+        $userId = $request->query('user_id');
+        $myCourses->when($userId, function ($query) use ($userId) {
+            return $query->where('user_id', '=', $userId);
+        });
+
+        return response()->json([
+            'error' => 0,
+            'message' => "All My Courses found",
+            'data' => $myCourses->get()
+        ], 200);
     }
 
     /**

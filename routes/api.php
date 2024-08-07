@@ -49,7 +49,7 @@ Route::controller(ImageCourseController::class)->group(function () {
 });
 
 Route::controller(MyCourseController::class)->group(function () {
-    // Route::get('/my-courses', 'index');
+    Route::get('/my-courses', 'index');
     // Route::get('/my-courses/{id}', 'show');
     Route::post('/my-courses', 'create');
     // Route::delete('/my-courses/{id}', 'destroy');

@@ -22,6 +22,7 @@ class Mentor extends Model
 
     public function courses()
     {
-        return $this->hasMany('App\Models\Course')->orderBy('id', 'ASC');
+        // return $this->hasMany('App\Models\Course')->orderBy('id', 'ASC');
+        return $this->hasMany(Course::class)->orderBy('id', 'ASC');
     }
 }
