@@ -6,6 +6,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ImageCourseController;
 use App\Http\Controllers\MyCourseController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,4 +54,12 @@ Route::controller(MyCourseController::class)->group(function () {
     // Route::get('/my-courses/{id}', 'show');
     Route::post('/my-courses', 'create');
     // Route::delete('/my-courses/{id}', 'destroy');
+});
+
+Route::controller(ReviewController::class)->group(function () {
+    Route::get('/review', 'index');
+    // Route::get('/review/{id}', 'show');
+    Route::post('/review', 'create');
+    Route::put('/review/{id}', 'update');
+    // Route::delete('/review/{id}', 'destroy');
 });
