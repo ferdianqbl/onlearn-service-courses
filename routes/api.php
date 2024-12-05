@@ -57,9 +57,9 @@ Route::controller(MyCourseController::class)->group(function () {
 });
 
 Route::controller(ReviewController::class)->group(function () {
-    Route::get('/review', 'index');
+    Route::get('/reviews', 'index');
     // Route::get('/review/{id}', 'show');
-    Route::post('/review', 'create');
-    Route::put('/review/{id}', 'update');
+    Route::post('/reviews', 'create');
+    Route::put('/reviews/{id}', 'update');
     // Route::delete('/review/{id}', 'destroy');
 });

@@ -40,7 +40,7 @@ class CourseController extends Controller
         return response()->json([
             'error' => 0,
             'message' => "All Courses found",
-            'data' => $courses->paginate(10)
+            'data' => $courses->with('reviews')->paginate(10)
         ], 200);
     }
 
