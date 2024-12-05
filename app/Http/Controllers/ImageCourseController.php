@@ -12,9 +12,21 @@ class ImageCourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $imageCourses = ImageCourse::get();
+        $courseId = $request->query('course_id');
+        
+        if(!$courseId) {
+            return response()->json([
+                'error' => 1,
+                'message' => 'Course ID is required'
+            ], 400);
+        }
+
+        $imageCourses = ImageCourse::query()
+            ->where('course_id', $courseId)
+            ->get();
+            
         return response()->json([
             'error' => 0,
             'message' => 'All image courses found',
