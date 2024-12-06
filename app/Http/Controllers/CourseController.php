@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Mentor;
+use App\Models\MyCourse;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -93,13 +95,43 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
+        $course = Course::with('mentor')
+            ->with('chapters.lessons')
+            ->with('images')
+            ->find($id);
 
         if (!$course)
             return response()->json([
                 'error' => 1,
                 'message' => 'Course not found'
             ], 404);
+
+        // $reviews = Review::where('course_id', $id)->get();
+        $reviews = Review::where('course_id', $id)->get()->toArray();
+
+        if (count($reviews) > 0) {
+            $userIds = array_column($reviews, 'user_id');
+            $users = getUserByIds($userIds); // Call helper function to get user data by ids
+
+            if ($users['error']) {
+                $reviews = [];
+            } else {
+                $users = $users['data']['rows']; // Get all user data from response (check response api get users by ids)
+                foreach ($reviews as $key => $review) {
+                    $userIndex = array_search($review['user_id'], array_column($users, 'id'));
+                    $reviews[$key]['user'] = $users[$userIndex];
+                }
+            }
+        }
+
+        $totalStudents = MyCourse::where('course_id', $id)->count();
+        $totalVideosPerLessonsOfChapter = $course->chapters->map(function ($chapter) {
+            return $chapter->lessons->count();
+        });
+
+        $course['total_videos'] = $totalVideosPerLessonsOfChapter->sum();
+        $course['total_students'] = $totalStudents;
+        $course['reviews'] = $reviews;
 
         return response()->json([
             'error' => 0,
