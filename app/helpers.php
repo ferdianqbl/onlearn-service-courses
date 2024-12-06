@@ -1,7 +1,9 @@
-<?php 
+<?php
+
 use Illuminate\Support\Facades\Http;
 
-function getUser($userId) {
+function getUser($userId)
+{
   $url = env('SERVICE_USER_URL') . '/users/' . $userId;
 
   try {
@@ -9,7 +11,6 @@ function getUser($userId) {
     $data = $response->json();
     $data['http_code'] = $response->getStatusCode();
     return $data;
-    
   } catch (\Throwable $th) {
     return [
       'error' => 1,
@@ -19,11 +20,12 @@ function getUser($userId) {
   }
 }
 
-function getUserByIds($userIds=[]) {
+function getUserByIds($userIds = [])
+{
   $url = env('SERVICE_USER_URL') . '/users/';
 
   try {
-    if(count($userIds) == 0) {
+    if (count($userIds) == 0) {
       return [
         'error' => 0,
         'http_code' => 200,
@@ -34,7 +36,6 @@ function getUserByIds($userIds=[]) {
     $data = $response->json();
     $data['http_code'] = $response->getStatusCode();
     return $data;
-    
   } catch (\Throwable $th) {
     return [
       'error' => 1,
@@ -43,5 +44,3 @@ function getUserByIds($userIds=[]) {
     ];
   }
 }
-
-?>
