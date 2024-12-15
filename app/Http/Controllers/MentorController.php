@@ -101,7 +101,6 @@ class MentorController extends Controller
 
 
         $mentor = Mentor::find($id);
-        $mentorWithSameEmail = Mentor::where('email', $data['email'])->first();
 
         if (!$mentor)
             return response()->json([
@@ -109,11 +108,14 @@ class MentorController extends Controller
                 'message' => 'Mentor not found'
             ], 404);
 
-        if ($mentorWithSameEmail && $mentorWithSameEmail->id !== $mentor->id)
-            return response()->json([
-                'error' => 1,
-                'message' => 'The email has already been taken'
-            ], 400);
+        if ($request->has('email')) {
+            $mentorWithSameEmail = Mentor::where('email', $data['email'])->first();
+            if ($mentorWithSameEmail && $mentorWithSameEmail->id !== $mentor->id)
+                return response()->json([
+                    'error' => 1,
+                    'message' => 'The email has already been taken'
+                ], 400);
+        }
 
         $mentor->update($data);
         return response()->json([
