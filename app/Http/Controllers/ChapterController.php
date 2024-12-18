@@ -18,7 +18,7 @@ class ChapterController extends Controller
 
         $courseId = $request->query('course_id');
 
-        if(!$courseId){
+        if (!$courseId) {
             return response()->json([
                 'error' => 1,
                 'message' => "Course ID is required",
@@ -89,6 +89,40 @@ class ChapterController extends Controller
         return response()->json([
             'error' => 0,
             'message' => "Chapter found",
+            'data' => $chapter,
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'name' => 'string',
+        ];
+
+        $data  = $request->all();
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 1,
+                'message' => $validator->errors(),
+            ], 400);
+        }
+
+        $chapter = Chapter::find($id);
+
+        if (!$chapter) {
+            return response()->json([
+                'error' => 1,
+                'message' => 'Chapter not found',
+            ], 404);
+        }
+
+        $chapter->update($data);
+
+        return response()->json([
+            'error' => 0,
+            'message' => "Chapter successfully updated",
             'data' => $chapter,
         ], 200);
     }
