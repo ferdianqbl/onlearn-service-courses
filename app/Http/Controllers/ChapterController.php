@@ -97,6 +97,7 @@ class ChapterController extends Controller
     {
         $rules = [
             'name' => 'string',
+            'course_id' => 'integer',
         ];
 
         $data  = $request->all();
@@ -116,6 +117,16 @@ class ChapterController extends Controller
                 'error' => 1,
                 'message' => 'Chapter not found',
             ], 404);
+        }
+
+        if ($data['course_id']) {
+            $course = Course::find($data['course_id']);
+            if (!$course) {
+                return response()->json([
+                    'error' => 1,
+                    'message' => 'Course not found',
+                ], 404);
+            }
         }
 
         $chapter->update($data);
