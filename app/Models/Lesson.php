@@ -17,7 +17,9 @@ class Lesson extends Model
     ];
 
     protected $fillable = [
-        'name', 'video', 'chapter_id'
+        'name',
+        'video',
+        'chapter_id'
     ];
 
     public function chapter()
