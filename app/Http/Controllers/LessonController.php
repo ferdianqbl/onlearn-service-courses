@@ -17,14 +17,14 @@ class LessonController extends Controller
         $lessons = Lesson::query();
         $chapterId = $req->query('chapter_id');
 
-        if(!$chapterId){
-            return response()->json([
-                'error' => 1,
-                'message' => "Chapter ID is required",
-            ], 400);
-        }
+        // if(!$chapterId){
+        //     return response()->json([
+        //         'error' => 1,
+        //         'message' => "Chapter ID is required",
+        //     ], 400);
+        // }
 
-        $lessons->when($chapterId, function ($query) use ($chapterId) {
+        if ($chapterId) $lessons->when($chapterId, function ($query) use ($chapterId) {
             return $query->where('chapter_id', '=', $chapterId);
         });
 
@@ -75,7 +75,7 @@ class LessonController extends Controller
     public function show(string $id)
     {
         $lesson = Lesson::find($id);
-        if(!$lesson) return response()->json([
+        if (!$lesson) return response()->json([
             'error' => 1,
             'message' => "Lesson not found",
         ], 404);
@@ -92,7 +92,7 @@ class LessonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $rules = [
+        $rules = [
             'name' => 'string',
             'video' => 'string',
             'chapter_id' => 'integer'
@@ -124,7 +124,7 @@ class LessonController extends Controller
             ], 404);
 
         $lesson->update($data);
-        
+
         return response()->json([
             'error' => 0,
             'message' => "Lesson successfully updated",
@@ -138,7 +138,7 @@ class LessonController extends Controller
     public function destroy(string $id)
     {
         $lesson = Lesson::find($id);
-        if(!$lesson) return response()->json([
+        if (!$lesson) return response()->json([
             'error' => 1,
             'message' => "Lesson not found",
         ], 404);
